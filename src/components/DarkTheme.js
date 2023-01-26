@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
 export default function DarkTheme() {
 
@@ -8,7 +8,6 @@ export default function DarkTheme() {
     const styles = StyleSheet.create({
         container: {
             paddingTop: 30,
-            paddingBottom: 80,
             paddingLeft: 12
         },
         themeBtn: {
