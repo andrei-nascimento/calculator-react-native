@@ -1,29 +1,29 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import math from 'mathjs';
 
 export default function Calculator() {
 
-    const [displayValue, setDisplayValue] = useState('0')
-    const [operator, setOperator] = useState(null);
-    const [operand1, setOperand1] = useState(null);
-    const [operand2, setOperand2] = useState(null);
+    const [expression, setExpression] = useState('');
+    const [result, setResult] = useState('');
 
     const handlePress = (value) => {
-        setDisplayValue(displayValue === '0' ? value : displayValue + value);
-    }
+        setExpression(expression + value);
+    };
 
-    const handleSum = () => {
-        if (operator === "+") {
-            const result = parseFloat(operand1) + parseFloat(operand2);
-            setDisplayValue(result.toString());
+    const calculate = () => {
+        try {
+            setResult(math.evaluate(expression));
+        } catch (error) {
+            setResult('Error');
         }
-    }
+    };
 
     return (
         <View style={styles.container}>
             <View style={styles.display}>
                 <View style={styles.numberDisplay}>
-                    <Text style={styles.number}>{displayValue}</Text>
+                    <Text style={styles.number}></Text>
                 </View>
             </View>
             <View style={styles.keyboard}>
@@ -34,7 +34,7 @@ export default function Calculator() {
                     <TouchableOpacity style={styles.buttons}>
                         <Text style={styles.icon}>%</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttons}>
+                    <TouchableOpacity style={styles.buttonsSpecial} onPress={() => handlePress("÷")}>
                         <Text style={styles.icon}>÷</Text>
                     </TouchableOpacity>
                 </View>
@@ -48,7 +48,7 @@ export default function Calculator() {
                     <TouchableOpacity style={styles.buttons} onPress={() => handlePress(9)}>
                         <Text style={styles.icon}>9</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttons}>
+                    <TouchableOpacity style={styles.buttonsSpecial} onPress={() => handlePress("x")}>
                         <Text style={styles.icon}>x</Text>
                     </TouchableOpacity>
                 </View>
@@ -62,7 +62,7 @@ export default function Calculator() {
                     <TouchableOpacity style={styles.buttons} onPress={() => handlePress(6)}>
                         <Text style={styles.icon}>6</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttons}>
+                    <TouchableOpacity style={styles.buttonsSpecial} onPress={() => handlePress("-")}>
                         <Text style={styles.icon}>-</Text>
                     </TouchableOpacity>
                 </View>
@@ -76,7 +76,7 @@ export default function Calculator() {
                     <TouchableOpacity style={styles.buttons} onPress={() => handlePress(3)}>
                         <Text style={styles.icon}>3</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttons} onPress={handleSum}>
+                    <TouchableOpacity style={styles.buttonsSpecial} onPress={() => handlePress("+")}>
                         <Text style={styles.icon}>+</Text>
                     </TouchableOpacity>
                 </View>
@@ -98,7 +98,7 @@ export default function Calculator() {
 
 const styles = StyleSheet.create({
     display: {
-        backgroundColor: '#AEAEAE',
+        backgroundColor: '#000000',
         paddingEnd: 22,
         paddingBottom: 12,
         paddingTop: 185
@@ -109,9 +109,10 @@ const styles = StyleSheet.create({
     },
     number: {
         fontSize: 72,
+        color: '#ffffff'
     },
     keyboard: {
-        backgroundColor: '#D9D9D9',
+        backgroundColor: '#121214',
         alignItems: 'center',
     },
     specialRowTop: {
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
         paddingBottom: 32,
     },
     buttonLarge: {
-        backgroundColor: '#AEAEAE',
+        backgroundColor: '#202024',
         alignItems: 'center',
         width: 155,
         borderRadius: 50,
@@ -136,7 +137,15 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     buttons: {
-        backgroundColor: '#AEAEAE',
+        backgroundColor: '#202024',
+        alignItems: 'center',
+        width: 72,
+        borderRadius: 100,
+        padding: 12,
+        margin: 5,
+    },
+    buttonsSpecial: {
+        backgroundColor: '#007CFF',
         alignItems: 'center',
         width: 72,
         borderRadius: 100,
