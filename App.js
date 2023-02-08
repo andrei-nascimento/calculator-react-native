@@ -1,21 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
-import Keyboard from './src/components/Calculator';
-import DarkTheme from "./src/components/DarkTheme";
+import Calculator from './src/components/Calculator';
 
 export default function App() {
 
   
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
 
-      {/* <DarkTheme /> */}
-      <Keyboard />
+      <Calculator />
 
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
